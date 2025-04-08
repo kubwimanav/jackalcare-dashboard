@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import DashboardHome from './components/DashboardHome'
 import SettingPage from './components/SettingPage'
 import MedicalHistoryPage from './components/MedicalHistoryPage'
+import AppointmentPage from './components/AppointmentPage'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
             <Route index element={<DashboardHome />} />
             <Route path="dashboard" element={<DashboardHome />} />
             <Route path="medicalhistory" element={<MedicalHistoryPage />} />
+            <Route path="appointment" element={<AppointmentPage />} />
             <Route path="setting" element={<SettingPage />} />
           </Route>
         </Routes>

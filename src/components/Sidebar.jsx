@@ -7,33 +7,31 @@ const Sidebar = ({ isOpen }) => {
   const currentPath = location.pathname;
 
   const menuItems = [
-      {
-          name: "Dashboard",
-          path: "/",
-          icon: <Home className="h-5 w-5 mr-3" />
-      },
     {
-      name: "Analytics",
-      path: "/analytics",
+      name: "Dashboard",
+      path: "/",
+      icon: <Home className="h-5 w-5 mr-3" />,
+    },
+    {
+      name: "Profile",
+      path: "/Profile",
       icon: <BarChart2 className="h-5 w-5 mr-3" />,
     },
     {
-      name: "Reports",
-      path: "/reports",
+      name: "Appointment",
+      path: "/appointment",
       icon: <FileText className="h-5 w-5 mr-3" />,
     },
-      {
-          name: "Medical History",
-          path: "/medicalhistory",
-          icon: <Users className="h-5 w-5 mr-3" />
-      },
+    {
+      name: "Medical History",
+      path: "/medicalhistory",
+      icon: <Users className="h-5 w-5 mr-3" />,
+    },
     {
       name: "Settings",
       path: "/setting",
       icon: <Settings className="h-5 w-5 mr-3" />,
-      },
-      
-    
+    },
   ];
 
   return (
