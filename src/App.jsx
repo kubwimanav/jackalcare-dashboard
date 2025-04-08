@@ -6,6 +6,7 @@ import DashboardHome from './components/DashboardHome'
 import SettingPage from './components/SettingPage'
 import MedicalHistoryPage from './components/MedicalHistoryPage'
 import AppointmentPage from './components/AppointmentPage'
+import ProfilePage from './components/ProfilePage'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="dashboard" element={<DashboardHome />} />
             <Route path="medicalhistory" element={<MedicalHistoryPage />} />
             <Route path="appointment" element={<AppointmentPage />} />
+            <Route path="profile" element={<ProfilePage />} />
             <Route path="setting" element={<SettingPage />} />
           </Route>
         </Routes>
