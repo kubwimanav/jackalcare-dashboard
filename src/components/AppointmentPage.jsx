@@ -8,7 +8,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
+  Check,
+  X,
 } from "lucide-react";
+import { BsFillHeartPulseFill } from "react-icons/bs";
 
 const AppointmentPage = () => {
   // State for selections
@@ -16,6 +19,7 @@ const AppointmentPage = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(2);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // Sample data with improved icons
   const services = [
@@ -24,21 +28,21 @@ const AppointmentPage = () => {
       title: "General Checkup",
       description: "Regular health examination and consultation",
       price: 75,
-      icon: <Stethoscope size={18} />,
+      icon: <Stethoscope size={24} />,
     },
     {
       id: 1,
       title: "Regular Health Examination",
       description: "Comprehensive health screening and tests",
       price: 120,
-      icon: <Heart size={18} />,
+      icon: <Heart size={24} />,
     },
     {
       id: 2,
       title: "Consultation",
       description: "Medical advice and prescription if needed",
       price: 50,
-      icon: <MessageSquare size={18} />,
+      icon: <BsFillHeartPulseFill size={24} />,
     },
   ];
 
@@ -70,29 +74,39 @@ const AppointmentPage = () => {
     "05:00 PM",
   ];
 
-  // Calendar helpers
-  const daysInMonth = (month, year) => new Date(year, month + 1, 0).getDate();
-  const firstDayOfMonth = (month, year) => new Date(year, month, 1).getDay();
+  // Calendar helpers - simplified for minimized calendar
+  const getDaysOfWeek = () => {
+    const today = new Date();
+    const days = [];
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      days.push({
+        date: date,
+        dayName: date.toLocaleDateString("en-US", { weekday: "short" }),
+        dayNumber: date.getDate(),
+      });
+    }
+
+    return days;
+  };
+
+  const daysOfWeek = getDaysOfWeek();
+
+  // Handle booking confirmation
+  const handleConfirmBooking = () => {
+    setShowConfirmation(true);
+  };
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
-        {/* First Section: Service Types - Improved Styling */}
+        {/* First Section: Service Types - Updated with Column Layout aligned to start */}
         <h2 className="text-xl font-semibold my-5 text-gray-800">
           Select Service Type
         </h2>
@@ -100,33 +114,19 @@ const AppointmentPage = () => {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`bg-white rounded-lg p-5 shadow transition-all hover:shadow-md
-                ${
-                  selectedService === index
-                    ? "ring-2 ring-blue-500 ring-offset-2"
-                    : "hover:-translate-y-1"
-                }`}
+              className="bg-white rounded-lg p-5 shadow"
               onClick={() => setSelectedService(index)}
             >
-              <div className="flex items-center mb-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center 
-                  ${selectedService === index ? "bg-blue-500" : "bg-blue-100"}`}
-                >
-                  <div
-                    className={
-                      selectedService === index ? "text-white" : "text-blue-500"
-                    }
-                  >
-                    {service.icon}
-                  </div>
+              <div className="flex flex-col items-start mb-3">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-blue-100">
+                  <div className="text-blue-500">{service.icon}</div>
                 </div>
-                <h3 className="text-lg font-semibold ml-3">{service.title}</h3>
+                <h3 className="text-lg font-semibold">{service.title}</h3>
+                <p className="text-gray-600 text-sm mt-1">
+                  {service.description}
+                </p>
               </div>
-              <p className="text-gray-600 text-sm mb-4">
-                {service.description}
-              </p>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mt-2">
                 <span className="text-blue-600 font-bold">
                   ${service.price}
                 </span>
@@ -149,12 +149,7 @@ const AppointmentPage = () => {
             {doctors.map((doctor, index) => (
               <div
                 key={doctor.id}
-                className={`flex bg-white rounded-lg p-4 shadow transition-all hover:shadow-md
-                  ${
-                    selectedDoctor === index
-                      ? "ring-2 ring-blue-500 ring-offset-1"
-                      : "hover:-translate-y-1"
-                  }`}
+                className="flex bg-white rounded-lg p-4 shadow"
                 onClick={() => setSelectedDoctor(index)}
               >
                 <div className="w-16 h-16 bg-blue-100 rounded-full mr-4 overflow-hidden">
@@ -185,7 +180,7 @@ const AppointmentPage = () => {
           </div>
         </div>
 
-        {/* Third Section: Date and Time Selection - Minimized Calendar Height */}
+        {/* Third Section: Date and Time Selection - Minimized Calendar */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
           <div className="bg-white rounded-lg p-4 shadow">
             <h3 className="text-lg font-semibold mb-3 text-gray-800 flex items-center">
@@ -193,105 +188,33 @@ const AppointmentPage = () => {
               Select Date
             </h3>
 
-            {/* Calendar - Inline Implementation */}
-            <div>
-              <div className="flex justify-between items-center mb-2">
-                <button
-                  className="p-1 rounded hover:bg-gray-200"
-                  onClick={() =>
-                    setSelectedDate(
-                      new Date(
-                        selectedDate.getFullYear(),
-                        selectedDate.getMonth() - 1,
-                        1
-                      )
-                    )
-                  }
-                >
+            {/* Minimized Calendar - Just Days of Week */}
+            <div className="mb-2">
+              <div className="flex justify-between items-center mb-3">
+                <button className="p-1 rounded">
                   <ChevronLeft size={16} />
                 </button>
-                <div className="text-sm font-medium">
-                  {monthNames[selectedDate.getMonth()]}{" "}
-                  {selectedDate.getFullYear()}
-                </div>
-                <button
-                  className="p-1 rounded hover:bg-gray-200"
-                  onClick={() =>
-                    setSelectedDate(
-                      new Date(
-                        selectedDate.getFullYear(),
-                        selectedDate.getMonth() + 1,
-                        1
-                      )
-                    )
-                  }
-                >
+                <div className="text-sm font-medium">This Week</div>
+                <button className="p-1 rounded">
                   <ChevronRight size={16} />
                 </button>
               </div>
 
-              <div className="grid grid-cols-7 gap-1 text-center mb-1">
-                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-                  <div key={day} className="text-xs font-medium text-gray-500">
-                    {day}
+              <div className="flex justify-between">
+                {daysOfWeek.map((day, index) => (
+                  <div
+                    key={index}
+                    className={`flex flex-col items-center cursor-pointer p-2 rounded-lg ${
+                      selectedDate.getDate() === day.date.getDate()
+                        ? "bg-blue-500 text-white"
+                        : ""
+                    }`}
+                    onClick={() => setSelectedDate(day.date)}
+                  >
+                    <span className="text-xs font-medium">{day.dayName}</span>
+                    <span className="text-lg font-bold">{day.dayNumber}</span>
                   </div>
                 ))}
-              </div>
-
-              <div className="grid grid-cols-7 gap-1">
-                {/* Empty cells for days before the first day of month */}
-                {Array.from({
-                  length: firstDayOfMonth(
-                    selectedDate.getMonth(),
-                    selectedDate.getFullYear()
-                  ),
-                }).map((_, i) => (
-                  <div key={`blank-${i}`} className="h-6 w-6"></div>
-                ))}
-
-                {/* Days of the month */}
-                {Array.from({
-                  length: daysInMonth(
-                    selectedDate.getMonth(),
-                    selectedDate.getFullYear()
-                  ),
-                }).map((_, i) => {
-                  const d = i + 1;
-                  const currentDate = new Date(
-                    selectedDate.getFullYear(),
-                    selectedDate.getMonth(),
-                    d
-                  );
-                  const isSelected = d === selectedDate.getDate();
-                  const isToday =
-                    new Date().setHours(0, 0, 0, 0) ===
-                    currentDate.setHours(0, 0, 0, 0);
-
-                  return (
-                    <div
-                      key={`day-${d}`}
-                      className={`h-6 w-6 rounded-full flex items-center justify-center cursor-pointer text-sm
-                        ${
-                          isSelected
-                            ? "bg-blue-500 text-white font-medium"
-                            : isToday
-                            ? "border border-blue-500"
-                            : "hover:bg-blue-100"
-                        }`}
-                      onClick={() =>
-                        setSelectedDate(
-                          new Date(
-                            selectedDate.getFullYear(),
-                            selectedDate.getMonth(),
-                            d
-                          )
-                        )
-                      }
-                    >
-                      {d}
-                    </div>
-                  );
-                })}
               </div>
             </div>
           </div>
@@ -305,11 +228,11 @@ const AppointmentPage = () => {
               {timeSlots.map((time, index) => (
                 <div
                   key={index}
-                  className={`py-1 px-2 rounded text-center cursor-pointer text-sm transition-all
+                  className={`py-1 px-2 rounded text-center cursor-pointer text-sm
                     ${
                       selectedTime === index
                         ? "bg-blue-500 text-white font-medium"
-                        : "bg-gray-100 hover:bg-blue-100"
+                        : "bg-gray-100"
                     }`}
                   onClick={() => setSelectedTime(index)}
                 >
@@ -366,11 +289,36 @@ const AppointmentPage = () => {
           <button className="px-5 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors">
             Back
           </button>
-          <button className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <button
+            className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            onClick={handleConfirmBooking}
+          >
             Confirm Booking
           </button>
         </div>
       </div>
+
+      {/* Confirmation Popup */}
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full flex flex-col items-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <Check size={32} className="text-green-500" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Booking Confirmed!</h3>
+            <p className="text-gray-600 text-center mb-6">
+              Your appointment has been successfully scheduled. A confirmation
+              has been sent to your email.
+            </p>
+            <button
+              className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={closeConfirmation}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

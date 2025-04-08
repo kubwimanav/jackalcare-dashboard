@@ -1,16 +1,15 @@
 import React from "react";
 import {
-  Users,
   UserPlus,
   CreditCard,
   RefreshCw,
   Headphones,
   Timer,
-  Heart,
   FilePlus,
   FileText,
 } from "lucide-react";
-import { SiToptal } from "react-icons/si";
+import { BsFillHeartPulseFill } from "react-icons/bs";
+
 
 const DashboardHome = () => {
   return (
@@ -66,7 +65,8 @@ const DashboardHome = () => {
               </p>
             </div>
             <div className="bg-gray-50 p-2 rounded-full">
-              <Heart size={24} className="text-red-500" />
+              <BsFillHeartPulseFill 
+              size={24} className="text-red-500" />
             </div>
           </div>
         </div>
