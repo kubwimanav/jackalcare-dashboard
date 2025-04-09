@@ -28,21 +28,21 @@ const AppointmentPage = () => {
       title: "General Checkup",
       description: "Regular health examination and consultation",
       price: 75,
-      icon: <Stethoscope size={24} />,
+      icon: <Stethoscope size={20} />,
     },
     {
       id: 1,
       title: "Regular Health Examination",
       description: "Comprehensive health screening and tests",
       price: 120,
-      icon: <Heart size={24} />,
+      icon: <Heart size={20} />,
     },
     {
       id: 2,
       title: "Consultation",
       description: "Medical advice and prescription if needed",
       price: 50,
-      icon: <BsFillHeartPulseFill size={24} />,
+      icon: <BsFillHeartPulseFill size={20} />,
     },
   ];
 
@@ -106,21 +106,21 @@ const AppointmentPage = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
-        {/* First Section: Service Types - Updated with Column Layout aligned to start */}
+        {/* First Section: Service Types - Updated with smaller cards and no background icon */}
         <h2 className="text-xl font-semibold my-5 text-gray-800">
           Select Service Type
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {services.map((service, index) => (
             <div
               key={service.id}
-              className="bg-white rounded-lg p-5 shadow"
+              className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer ${
+                selectedService === index ? "ring-2 ring-blue-500" : ""
+              }`}
               onClick={() => setSelectedService(index)}
             >
-              <div className="flex flex-col items-start mb-3">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-2 bg-blue-100">
-                  <div className="text-blue-500">{service.icon}</div>
-                </div>
+              <div className="flex flex-col items-start mb-2">
+                <div className="text-blue-500 mb-1">{service.icon}</div>
                 <h3 className="text-lg font-semibold">{service.title}</h3>
                 <p className="text-gray-600 text-sm mt-1">
                   {service.description}
@@ -228,11 +228,11 @@ const AppointmentPage = () => {
               {timeSlots.map((time, index) => (
                 <div
                   key={index}
-                  className={`py-1 px-2 rounded text-center cursor-pointer text-sm
+                  className={`py-1 px-2 text-center cursor-pointer text-sm rounded
                     ${
                       selectedTime === index
-                        ? "bg-blue-500 text-white font-medium"
-                        : "bg-gray-100"
+                        ? "border-2 border-blue-500 font-medium"
+                        : "border border-gray-200 hover:border-blue-400"
                     }`}
                   onClick={() => setSelectedTime(index)}
                 >
@@ -250,20 +250,20 @@ const AppointmentPage = () => {
         <div className="bg-white rounded-lg p-5 shadow mb-8">
           <div className="py-3 flex justify-between border-b border-gray-200">
             <span className="font-semibold text-gray-600">Service</span>
-            <span className="text-gray-800">
+            <span className="text-black font-medium">
               {services[selectedService].title}
             </span>
           </div>
           <div className="py-3 flex justify-between border-b border-gray-200">
             <span className="font-semibold text-gray-600">Doctor</span>
-            <span className="text-gray-800">
+            <span className="text-black font-medium">
               {doctors[selectedDoctor].name} (
               {doctors[selectedDoctor].specialty})
             </span>
           </div>
           <div className="py-3 flex justify-between border-b border-gray-200">
             <span className="font-semibold text-gray-600">Date & Time</span>
-            <span className="text-gray-800">
+            <span className="text-black font-medium">
               {selectedDate.toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
@@ -274,7 +274,7 @@ const AppointmentPage = () => {
           </div>
           <div className="py-3 flex justify-between border-b border-gray-200">
             <span className="font-semibold text-gray-600">Duration</span>
-            <span className="text-gray-800">45 minutes</span>
+            <span className="text-black font-medium">45 minutes</span>
           </div>
           <div className="py-3 flex justify-between">
             <span className="font-semibold text-gray-600">Price</span>
@@ -322,4 +322,5 @@ const AppointmentPage = () => {
     </div>
   );
 };
+
 export default AppointmentPage;
