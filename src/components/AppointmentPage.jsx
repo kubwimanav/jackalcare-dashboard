@@ -322,5 +322,4 @@ const AppointmentPage = () => {
     </div>
   );
 };
-
 export default AppointmentPage;
