@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import profile from "../assets/profile.jpg";
+import { TbDentalBroken } from "react-icons/tb";
 import {
   Stethoscope,
-  Heart,
-  MessageSquare,
   Star,
   ChevronLeft,
   ChevronRight,
@@ -32,15 +31,15 @@ const AppointmentPage = () => {
     },
     {
       id: 1,
-      title: "Regular Health Examination",
-      description: "Comprehensive health screening and tests",
+      title: "Dental Care",
+      description: "Complete dental examination and cleaning",
       price: 120,
-      icon: <Heart size={20} />,
+      icon: <TbDentalBroken size={20} />,
     },
     {
       id: 2,
-      title: "Consultation",
-      description: "Medical advice and prescription if needed",
+      title: "Cardiology",
+      description: "Heart health assessment and consultation",
       price: 50,
       icon: <BsFillHeartPulseFill size={20} />,
     },
@@ -107,21 +106,19 @@ const AppointmentPage = () => {
     <div className="bg-gray-100 min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
         {/* First Section: Service Types - Updated with smaller cards and no background icon */}
-        <h2 className="text-xl font-semibold my-5 text-gray-800">
-          Select Service Type
-        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer ${
-                selectedService === index ? "ring-2 ring-blue-500" : ""
-              }`}
-              onClick={() => setSelectedService(index)}
+              className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer 
+                $
+              }`
+              }
+              // onClick={() => setSelectedService(index)}
             >
               <div className="flex flex-col items-start mb-2">
                 <div className="text-blue-500 mb-1">{service.icon}</div>
-                <h3 className="text-lg font-semibold">{service.title}</h3>
+                <h3 className="text-sm font-semibold">{service.title}</h3>
                 <p className="text-gray-600 text-sm mt-1">
                   {service.description}
                 </p>
@@ -130,18 +127,18 @@ const AppointmentPage = () => {
                 <span className="text-blue-600 font-bold">
                   ${service.price}
                 </span>
-                {selectedService === index && (
+                {/* {selectedService === index && (
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                     Selected
                   </span>
-                )}
+                )} */}
               </div>
             </div>
           ))}
         </div>
 
         {/* Second Section: Doctor Selection */}
-        <h2 className="text-xl font-semibold my-5 text-gray-800">
+        <h2 className="text-2xs font-semibold my-5 text-gray-800">
           Select Doctor
         </h2>
         <div className="mb-8">
@@ -152,7 +149,7 @@ const AppointmentPage = () => {
                 className="flex bg-white rounded-lg p-4 shadow"
                 onClick={() => setSelectedDoctor(index)}
               >
-                <div className="w-16 h-16 bg-blue-100 rounded-full mr-4 overflow-hidden">
+                <div className="w-9 h-9 bg-blue-100 rounded-full mr-4 overflow-hidden">
                   <img
                     src={profile}
                     alt={doctor.name}
@@ -160,7 +157,7 @@ const AppointmentPage = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold mb-1">{doctor.name}</h3>
+                  <h3 className="text-sm font-semibold mb-1">{doctor.name}</h3>
                   <p className="text-gray-600 text-sm mb-1">
                     {doctor.specialty}
                   </p>
@@ -183,8 +180,7 @@ const AppointmentPage = () => {
         {/* Third Section: Date and Time Selection - Minimized Calendar */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
           <div className="bg-white rounded-lg p-4 shadow">
-            <h3 className="text-lg font-semibold mb-3 text-gray-800 flex items-center">
-              <Clock size={16} className="mr-2" />
+            <h3 className="text-2xs font-semibold mb-3 text-gray-800 flex items-center">
               Select Date
             </h3>
 
@@ -212,7 +208,7 @@ const AppointmentPage = () => {
                     onClick={() => setSelectedDate(day.date)}
                   >
                     <span className="text-xs font-medium">{day.dayName}</span>
-                    <span className="text-lg font-bold">{day.dayNumber}</span>
+                    <span className="text-xs font-bold">{day.dayNumber}</span>
                   </div>
                 ))}
               </div>
@@ -220,8 +216,7 @@ const AppointmentPage = () => {
           </div>
 
           <div className="bg-white rounded-lg p-4 shadow">
-            <h3 className="text-lg font-semibold mb-3 text-gray-800 flex items-center">
-              <Clock size={16} className="mr-2" />
+            <h3 className="text-2xs font-semibold mb-3 text-gray-800 flex items-center">
               Select Time
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -244,40 +239,36 @@ const AppointmentPage = () => {
         </div>
 
         {/* Fourth Section: Appointment Summary */}
-        <h2 className="text-xl font-semibold my-5 text-gray-800">
+        <h2 className="text-2xs font-semibold my-5 text-gray-800">
           Appointment Summary
         </h2>
         <div className="bg-white rounded-lg p-5 shadow mb-8">
           <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-semibold text-gray-600">Service</span>
-            <span className="text-black font-medium">
+            <span className="font-normal text-gray-600">Service</span>
+            <span className="text-black text-sm font-medium">
               {services[selectedService].title}
             </span>
           </div>
           <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-semibold text-gray-600">Doctor</span>
-            <span className="text-black font-medium">
-              {doctors[selectedDoctor].name} (
-              {doctors[selectedDoctor].specialty})
+            <span className="font-normal text-gray-600">Doctor</span>
+            <span className="text-black text-sm font-medium">
+              {doctors[selectedDoctor].name}
             </span>
           </div>
           <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-semibold text-gray-600">Date & Time</span>
-            <span className="text-black font-medium">
+            <span className="font-normal text-gray-600">Date & Time</span>
+            <span className="text-black text-sm font-medium ">
               {selectedDate.toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
                 year: "numeric",
               })}{" "}
-              at {timeSlots[selectedTime]}
+              {timeSlots[selectedTime]}
             </span>
           </div>
-          <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-semibold text-gray-600">Duration</span>
-            <span className="text-black font-medium">45 minutes</span>
-          </div>
+
           <div className="py-3 flex justify-between">
-            <span className="font-semibold text-gray-600">Price</span>
+            <span className="font-normal text-gray-600">Price</span>
             <span className="text-lg font-semibold text-blue-600">
               ${services[selectedService].price}
             </span>

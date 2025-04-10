@@ -1,12 +1,13 @@
 import React from "react";
+import { ImLab } from "react-icons/im";
+import { FaAnchorCircleCheck } from "react-icons/fa6";
+
 import {
-  UserPlus,
-  CreditCard,
-  RefreshCw,
   Headphones,
   Timer,
   FilePlus,
   FileText,
+  Stethoscope,
 } from "lucide-react";
 import { BsFillHeartPulseFill } from "react-icons/bs";
 
@@ -59,14 +60,13 @@ const DashboardHome = () => {
               <h2 className="text-base font-medium text-gray-700 mb-2">
                 Health Status
               </h2>
-              <p className="text-2xs font-bold text-red-500">Good</p>
+              <p className="text-2xs font-bold text-[#10B981]">Good</p>
               <p className="text-sm text-gray-500 mt-1">
                 Last check: 2 days ago
               </p>
             </div>
             <div className="bg-gray-50 p-2 rounded-full">
-              <BsFillHeartPulseFill 
-              size={24} className="text-red-500" />
+              <BsFillHeartPulseFill size={24} className="text-red-500" />
             </div>
           </div>
         </div>
@@ -101,46 +101,41 @@ const DashboardHome = () => {
 
         <div className="flex flex-col space-y-4">
           {/* First Activity Item */}
-          <div className="bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors border border-gray-100">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <UserPlus className="text-blue-500" size={18} />
-                <h3 className="font-medium text-gray-800">
-                  New User Registration
-                </h3>
-              </div>
-              <span className="text-xs text-gray-500">2 hours ago</span>
+          <div className="bg-gray-50 rounded-md p-2 hover:bg-gray-100 transition-colors border border-gray-100">
+            <div className="flex items-center gap-3">
+              <FaAnchorCircleCheck className="text-blue-500" size={18} />
+              <h3 className="font-medium text-gray-800">
+                Prescription Renewed
+              </h3>
             </div>
             <p className="text-sm text-gray-600 mt-2 ml-8">
-              John Doe completed registration and verified email address.
+              Dr. Michael Brown - 2 days ago
             </p>
           </div>
 
           {/* Second Activity Item */}
-          <div className="bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors border border-gray-100">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <CreditCard className="text-green-500" size={18} />
-                <h3 className="font-medium text-gray-800">Payment Processed</h3>
-              </div>
-              <span className="text-xs text-gray-500">5 hours ago</span>
+          <div className="bg-gray-50 rounded-md p-2 hover:bg-gray-100 transition-colors border border-gray-100">
+            <div className="flex items-center gap-3">
+              <Stethoscope className="text-green-500" size={18} />
+              <h3 className="font-medium text-gray-800">Check-up Completed</h3>
             </div>
+
             <p className="text-sm text-gray-600 mt-2 ml-8">
-              Payment of $299 was successfully processed for order #45782.
+              Dr. Sarah Wilson - 5 days ago
             </p>
           </div>
 
           {/* Third Activity Item */}
-          <div className="bg-gray-50 rounded-md p-4 hover:bg-gray-100 transition-colors border border-gray-100">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <RefreshCw className="text-purple-500" size={18} />
-                <h3 className="font-medium text-gray-800">System Update</h3>
-              </div>
-              <span className="text-xs text-gray-500">Yesterday</span>
+          <div className="bg-gray-50 rounded-md p-2 hover:bg-gray-100 transition-colors border border-gray-100">
+            <div className="flex items-center gap-3">
+              <ImLab className="text-purple-500" size={18} />
+              <h3 className="font-medium text-gray-800">
+                Lab Results Available
+              </h3>
             </div>
+
             <p className="text-sm text-gray-600 mt-2 ml-8">
-              The system was updated to version 2.3.0 with new features.
+              Central Lab - 1 week ago
             </p>
           </div>
         </div>
