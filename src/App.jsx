@@ -7,6 +7,8 @@ import SettingPage from './components/SettingPage'
 import MedicalHistoryPage from './components/MedicalHistoryPage'
 import AppointmentPage from './components/AppointmentPage'
 import ProfilePage from './components/ProfilePage'
+import AdminDashHome from './AdminDashboard/AdminDashHome'
+import AdminDashboardLayout from './AdminDashboard/AdminDashboardLayout'
 
 function App() {
 
@@ -21,6 +23,10 @@ function App() {
             <Route path="appointment" element={<AppointmentPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="setting" element={<SettingPage />} />
+          </Route>
+
+          <Route path="/admin" element={<AdminDashboardLayout />}>
+           <Route index element={<AdminDashHome />}/>
           </Route>
         </Routes>
       </BrowserRouter>
