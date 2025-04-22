@@ -11,7 +11,9 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
+import { FaDollarSign, FaUsers } from "react-icons/fa6";
+import { FaUserDoctor } from "react-icons/fa6";
+import { MdInsertDriveFile } from "react-icons/md";
 function AdminDashHome() {
   // Sample data for charts
   const revenueData = [
@@ -79,48 +81,56 @@ function AdminDashHome() {
           {/* Card 1 */}
           <div className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500">Total Users</span>
-              <span className="text-2xl font-bold mt-1">5,248</span>
-              <span className="text-sm text-green-500 mt-1">+12.5%</span>
+              <span className="text-sm text-gray-500">Total Patients</span>
+              <span className="text-xm font-bold mt-1">5,248</span>
+              <span className="text-sm text-green-500 mt-1">
+                +12.5% from last month
+              </span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white text-xl">
-              👥
+            <div className="w-7 h-7 rounded-sm bg-[#EFF6FF] flex items-center justify-center text-blue-400 text-xl">
+              <FaUsers />
             </div>
           </div>
 
           {/* Card 2 */}
           <div className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500">New Orders</span>
-              <span className="text-2xl font-bold mt-1">1,427</span>
-              <span className="text-sm text-green-500 mt-1">+8.2%</span>
+              <span className="text-sm text-gray-500">Total Doctors</span>
+              <span className="text-xm font-bold mt-1">1,427</span>
+              <span className="text-sm text-green-500 mt-1">
+                +5.2% from last month
+              </span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-white text-xl">
-              📦
+            <div className="w-7 h-7 rounded-sm bg-[#ECFDF5] flex items-center justify-center text-[#10B981] text-xl">
+              <FaUserDoctor />
             </div>
           </div>
 
           {/* Card 3 */}
           <div className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500">Revenue</span>
-              <span className="text-2xl font-bold mt-1">$24,583</span>
-              <span className="text-sm text-green-500 mt-1">+5.7%</span>
+              <span className="text-sm text-gray-500">
+                Today's Appointments
+              </span>
+              <span className="text-sm font-bold mt-1">$24,583</span>
+              <span className="text-sm text-green-500 mt-1">12 completed</span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white text-xl">
-              💰
+            <div className="w-7 h-7 rounded-sm bg-[#F5F3FF] flex items-center justify-center text-[#8B5CF6] text-xl">
+              <MdInsertDriveFile />
             </div>
           </div>
 
           {/* Card 4 */}
           <div className="bg-white rounded-lg shadow p-4 flex justify-between items-center">
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500">Growth</span>
-              <span className="text-2xl font-bold mt-1">32.5%</span>
-              <span className="text-sm text-red-500 mt-1">-2.4%</span>
+              <span className="text-sm text-gray-500">Total Revenue</span>
+              <span className="text-sm font-bold mt-1">$24,500</span>
+              <span className="text-sm text-red-500 mt-1">
+                +8.4% from last month
+              </span>
             </div>
-            <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white text-xl">
-              📈
+            <div className="w-7 h-7 rounded-sm bg-[#FFFBEB] flex items-center justify-center text-[#F59E0B] text-xl">
+              <FaDollarSign />
             </div>
           </div>
         </div>

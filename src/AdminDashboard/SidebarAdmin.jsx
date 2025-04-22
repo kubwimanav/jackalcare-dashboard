@@ -9,12 +9,12 @@ const SidebarAdmin= ({ isOpen }) => {
   const menuItems = [
     {
       name: "Dashboard",
-      path: "/adminhome",
+      path: "/admin",
       icon: <Home className="h-5 w-5 mr-3" />,
     },
     {
       name: "Users Management",
-      path: "/Profile",
+      path: "user",
       icon: <BarChart2 className="h-5 w-5 mr-3" />,
     },
 
@@ -25,7 +25,7 @@ const SidebarAdmin= ({ isOpen }) => {
     },
     {
       name: "Appointment",
-      path: "/appointment",
+      path: "adminappointment",
       icon: <FileText className="h-5 w-5 mr-3" />,
     },
 
