@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, BarChart2, FileText, Users, Settings } from "lucide-react";
+import { IoMdClock, IoMdSettings } from "react-icons/io";
+import { FaChartLine, FaUserDoctor, FaUsers } from "react-icons/fa6";
+import { MdOutlineAppSettingsAlt, MdPayment, MdSupportAgent } from "react-icons/md";
 
 const SidebarAdmin= ({ isOpen }) => {
   const location = useLocation();
@@ -10,45 +13,45 @@ const SidebarAdmin= ({ isOpen }) => {
     {
       name: "Dashboard",
       path: "/admin",
-      icon: <Home className="h-5 w-5 mr-3" />,
+      icon: <IoMdClock className="h-5 w-5 mr-3" />,
     },
     {
       name: "Users Management",
       path: "user",
-      icon: <BarChart2 className="h-5 w-5 mr-3" />,
+      icon: <FaUsers className="h-5 w-5 mr-3" />,
     },
 
     {
       name: "Doctors & Institutions",
       path: "doctorinstitution",
-      icon: <Users className="h-5 w-5 mr-3" />,
+      icon: <FaUserDoctor className="h-5 w-5 mr-3" />,
     },
     {
       name: "Appointment",
       path: "adminappointment",
-      icon: <FileText className="h-5 w-5 mr-3" />,
+      icon: <MdOutlineAppSettingsAlt className="h-5 w-5 mr-3" />,
     },
 
     {
       name: "Payments",
-      path: "/appointment",
-      icon: <FileText className="h-5 w-5 mr-3" />,
+      path: "payment",
+      icon: <MdPayment className="h-5 w-5 mr-3" />,
     },
     {
       name: "Reports & Analytics",
       path: "/appointment",
-      icon: <FileText className="h-5 w-5 mr-3" />,
+      icon: <FaChartLine className="h-5 w-5 mr-3" />,
     },
     {
       name: "Support/Feedback",
       path: "/appointment",
-      icon: <FileText className="h-5 w-5 mr-3" />,
+      icon: <MdSupportAgent  className="h-5 w-5 mr-3" />,
     },
 
     {
       name: "Settings",
       path: "/setting",
-      icon: <Settings className="h-5 w-5 mr-3" />,
+      icon: <IoMdSettings className="h-5 w-5 mr-3" />,
     },
   ];
 
