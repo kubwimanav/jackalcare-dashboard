@@ -13,6 +13,9 @@ import UserManagement from './AdminDashboard/UserManagement'
 import Appointment from './AdminDashboard/Apppointment'
 import DoctorInstitutionManagement from './AdminDashboard/DoctorInstitutionManagement'
 import Payments from './AdminDashboard/Payments'
+import SettingAdmin from './AdminDashboard/SettingAdmin'
+import ReportAnaltics from './AdminDashboard/ReportAnaltics'
+import SupportFeedback from './AdminDashboard/SupportFeedback'
 
 function App() {
 
@@ -31,16 +34,17 @@ function App() {
 
           <Route path="/admin" element={<AdminDashboardLayout />}>
             <Route index element={<AdminDashHome />} />
+            <Route path="adminhome" element={<AdminDashHome />} />
             <Route path="user" element={<UserManagement />} />
             <Route path="adminappointment" element={<Appointment />} />
             <Route
               path="doctorinstitution"
               element={<DoctorInstitutionManagement />}
             />
-            <Route
-              path="payment"
-              element={<Payments/>}
-            />
+            <Route path="payment" element={<Payments />} />
+            <Route path="support" element={<SupportFeedback />} />
+            <Route path="report" element={<ReportAnaltics />} />
+            <Route path="adminsetting" element={<SettingAdmin />} />
           </Route>
         </Routes>
       </BrowserRouter>

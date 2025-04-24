@@ -39,18 +39,18 @@ const SidebarAdmin= ({ isOpen }) => {
     },
     {
       name: "Reports & Analytics",
-      path: "/appointment",
+      path: "report",
       icon: <FaChartLine className="h-5 w-5 mr-3" />,
     },
     {
       name: "Support/Feedback",
-      path: "/appointment",
+      path: "support",
       icon: <MdSupportAgent  className="h-5 w-5 mr-3" />,
     },
 
     {
       name: "Settings",
-      path: "/setting",
+      path: "adminsetting",
       icon: <IoMdSettings className="h-5 w-5 mr-3" />,
     },
   ];
@@ -66,7 +66,7 @@ const SidebarAdmin= ({ isOpen }) => {
           {menuItems.map((item, index) => {
             const isActive =
               currentPath === item.path ||
-              (currentPath === "/dashboard" && item.path === "/");
+              (currentPath === "/admin" && item.path === "/adminhome");
 
             return (
               <li key={index}>
