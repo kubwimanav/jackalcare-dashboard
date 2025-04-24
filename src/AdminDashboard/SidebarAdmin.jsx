@@ -20,7 +20,7 @@ const SidebarAdmin= ({ isOpen }) => {
 
     {
       name: "Doctors & Institutions",
-      path: "/medicalhistory",
+      path: "doctorinstitution",
       icon: <Users className="h-5 w-5 mr-3" />,
     },
     {

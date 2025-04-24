@@ -11,6 +11,7 @@ import AdminDashHome from './AdminDashboard/AdminDashHome'
 import AdminDashboardLayout from './AdminDashboard/AdminDashboardLayout'
 import UserManagement from './AdminDashboard/UserManagement'
 import Appointment from './AdminDashboard/Apppointment'
+import DoctorInstitutionManagement from './AdminDashboard/DoctorInstitutionManagement'
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route index element={<AdminDashHome />} />
             <Route path="user" element={<UserManagement />} />
             <Route path="adminappointment" element={<Appointment />} />
+            <Route path="doctorinstitution" element={<DoctorInstitutionManagement />} />
           </Route>
         </Routes>
       </BrowserRouter>
