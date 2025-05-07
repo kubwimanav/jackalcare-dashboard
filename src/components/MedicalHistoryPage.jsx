@@ -43,8 +43,8 @@ const MedicalHistoryPage = () => {
       <div className="max-w-6xl mx-auto flex flex-col gap-5">
         {/* Page Title and Description */}
         <div className="mb-2">
-          <h1 className="text-2xl font-bold text-gray-800">Medical History</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-sm font-bold text-gray-800">Medical History</h1>
+          <p className="text-gray-600 mt-1 text-sm">
             View and manage your complete medical records, including past
             visits, prescriptions, and test results.
           </p>
@@ -74,15 +74,15 @@ const MedicalHistoryPage = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <p className="text-gray-500 text-xs min-w-20">Age:</p>
-                <p className="font-medium">{patientData.age}</p>
+                <p className="font-medium text-sm">{patientData.age}</p>
               </div>
               <div className="flex items-center gap-2">
                 <p className="text-gray-500 text-xs min-w-20">Blood Type:</p>
-                <p className="font-medium">{patientData.bloodType}</p>
+                <p className="font-medium text-sm">{patientData.bloodType}</p>
               </div>
               <div className="flex items-center gap-2">
                 <p className="text-gray-500 text-xs min-w-20">Last Visit:</p>
-                <p className="font-medium">{patientData.lastVisit}</p>
+                <p className="font-medium text-sm">{patientData.lastVisit}</p>
               </div>
             </div>
 
@@ -92,15 +92,15 @@ const MedicalHistoryPage = () => {
                 <p className="text-gray-500 text-xs min-w-28">
                   Primary Doctor:
                 </p>
-                <p className="font-medium">{patientData.primaryDoctor}</p>
+                <p className="font-medium text-sm">{patientData.primaryDoctor}</p>
               </div>
               <div className="flex items-center gap-2">
                 <p className="text-gray-500 text-xs min-w-28">Insurance:</p>
-                <p className="font-medium">{patientData.insurance}</p>
+                <p className="font-medium text-sm">{patientData.insurance}</p>
               </div>
               <div className="flex items-center gap-2">
                 <p className="text-gray-500 text-xs min-w-28">Allergies:</p>
-                <p className="font-medium">{patientData.allergies}</p>
+                <p className="font-medium text-sm">{patientData.allergies}</p>
               </div>
             </div>
           </div>
@@ -113,12 +113,12 @@ const MedicalHistoryPage = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="px-4 py-2 border border-gray-300 rounded-md w-60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 text-sm py-2 border border-gray-300 rounded-md w-60 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <div>
-              <select className="px-4 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select className="px-4 text-sm py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option>All Types</option>
                 <option>Consultation</option>
                 <option>Check-up</option>
@@ -130,11 +130,11 @@ const MedicalHistoryPage = () => {
             <div>
               <input
                 type="date"
-                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-4 text-sm py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+            <button className="flex text-sm items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -153,7 +153,7 @@ const MedicalHistoryPage = () => {
               Export PDF
             </button>
 
-            <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+            <button className="flex text-sm items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -180,21 +180,31 @@ const MedicalHistoryPage = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b">
-                  <th className="py-3 px-4 text-left bg-gray-50">Date</th>
-                  <th className="py-3 px-4 text-left bg-gray-50">Type</th>
-                  <th className="py-3 px-4 text-left bg-gray-50">Doctor</th>
-                  <th className="py-3 px-4 text-left bg-gray-50">Diagnosis</th>
-                  <th className="py-3 px-4 text-left bg-gray-50">Actions</th>
+                  <th className="text-sm py-3 px-4 text-left bg-gray-50">
+                    Date
+                  </th>
+                  <th className="text-sm py-3 px-4 text-left bg-gray-50">
+                    Type
+                  </th>
+                  <th className="text-sm py-3 px-4 text-left bg-gray-50">
+                    Doctor
+                  </th>
+                  <th className="text-sm py-3 px-4 text-left bg-gray-50">
+                    Diagnosis
+                  </th>
+                  <th className="text-sm py-3 px-4 text-left bg-gray-50">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {medicalRecords.map((record) => (
                   <tr key={record.id} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-4">{record.date}</td>
-                    <td className="py-3 px-4">{record.type}</td>
-                    <td className="py-3 px-4">{record.doctor}</td>
-                    <td className="py-3 px-4">{record.diagnosis}</td>
-                    <td className="py-3 px-4">
+                    <td className="text-sm py-3 px-4">{record.date}</td>
+                    <td className="text-sm py-3 px-4">{record.type}</td>
+                    <td className="text-sm py-3 px-4">{record.doctor}</td>
+                    <td className="text-sm py-3 px-4">{record.diagnosis}</td>
+                    <td className="text-sm py-3 px-4">
                       <div className="flex gap-3">
                         <button className="text-blue-600 hover:text-blue-800">
                           <svg

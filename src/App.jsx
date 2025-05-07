@@ -16,6 +16,7 @@ import Payments from './AdminDashboard/Payments'
 import SettingAdmin from './AdminDashboard/SettingAdmin'
 import ReportAnaltics from './AdminDashboard/ReportAnaltics'
 import SupportFeedback from './AdminDashboard/SupportFeedback'
+import PaymentPortal from './components/PaymentPortal'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="appointment" element={<AppointmentPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="setting" element={<SettingPage />} />
+            <Route path="portal" element={<PaymentPortal />} />
           </Route>
 
           <Route path="/admin" element={<AdminDashboardLayout />}>

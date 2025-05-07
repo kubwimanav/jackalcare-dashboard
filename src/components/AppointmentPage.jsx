@@ -11,6 +11,7 @@ import {
   X,
 } from "lucide-react";
 import { BsFillHeartPulseFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const AppointmentPage = () => {
   // State for selections
@@ -18,7 +19,6 @@ const AppointmentPage = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(2);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // Sample data with improved icons
   const services = [
@@ -94,13 +94,7 @@ const AppointmentPage = () => {
   const daysOfWeek = getDaysOfWeek();
 
   // Handle booking confirmation
-  const handleConfirmBooking = () => {
-    setShowConfirmation(true);
-  };
 
-  const closeConfirmation = () => {
-    setShowConfirmation(false);
-  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-4">
@@ -112,8 +106,7 @@ const AppointmentPage = () => {
               key={service.id}
               className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer 
                 $
-              }`
-              }
+              }`}
               // onClick={() => setSelectedService(index)}
             >
               <div className="flex flex-col items-start mb-2">
@@ -280,36 +273,13 @@ const AppointmentPage = () => {
           <button className="px-5 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors">
             Back
           </button>
-          <button
-            className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-            onClick={handleConfirmBooking}
-          >
-            Confirm Booking
+          <button className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+            <Link to={"/portal"}>Confirm Booking</Link>
           </button>
         </div>
       </div>
 
       {/* Confirmation Popup */}
-      {showConfirmation && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full flex flex-col items-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Check size={32} className="text-green-500" />
-            </div>
-            <h3 className="text-xl font-bold mb-2">Booking Confirmed!</h3>
-            <p className="text-gray-600 text-center mb-6">
-              Your appointment has been successfully scheduled. A confirmation
-              has been sent to your email.
-            </p>
-            <button
-              className="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-              onClick={closeConfirmation}
-            >
-              Done
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
