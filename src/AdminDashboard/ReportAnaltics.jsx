@@ -23,7 +23,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-export default function AnalyticsDashboard() {
+export default function ReportAnalytics() {
   // State for date range, report type and dropdowns
   const [dateRange, setDateRange] = useState({
     start: "Apr 01, 2025",
@@ -66,21 +66,21 @@ export default function AnalyticsDashboard() {
       title: "Total Appointments",
       value: "1,248",
       change: 12.5,
-      icon: <Calendar size={10} />,
+      icon: <Calendar size={20} />,
       color: "bg-blue-600",
     },
     {
       title: "Total Revenue",
       value: "$84,254",
       change: 8.2,
-      icon: <LineChart size={10} />,
+      icon: <LineChart size={20} />,
       color: "bg-green-500",
     },
     {
       title: "New Patients",
       value: "354",
       change: 5.1,
-      icon: <User size={10} />,
+      icon: <User size={20} />,
       color: "bg-orange-500",
     },
     {
@@ -88,7 +88,7 @@ export default function AnalyticsDashboard() {
       value: "3.2%",
       change: 0.8,
       isNegative: true,
-      icon: <Calendar size={10} />,
+      icon: <Calendar size={20} />,
       color: "bg-red-500",
     },
   ];
@@ -123,27 +123,62 @@ export default function AnalyticsDashboard() {
     setShowReportTypes(false);
   };
 
+  // Handler for closing all dropdowns when clicking outside
+  const closeDropdowns = () => {
+    setShowDatePicker(false);
+    setShowReportTypes(false);
+  };
+
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
+    <div
+      className="bg-gray-100 min-h-screen p-2 sm:p-4 md:p-6"
+      onClick={closeDropdowns}
+    >
       <div className="max-w-7xl mx-auto">
         {/* Header with Date Range, Report Type, and Export Buttons */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
+        <div className="bg-white rounded-lg shadow p-3 sm:p-4 md:p-6 mb-4 sm:mb-6">
+          {/* Header title */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="font-bold text-lg sm:text-xl">
+              Analytics Dashboard
+            </h2>
+            <div className="hidden sm:flex space-x-2">
+              <button className="flex items-center bg-blue-600 text-white px-3 py-2 rounded text-sm">
+                <Download size={16} className="mr-2" />
+                Export CSV
+              </button>
+              <button className="flex items-center bg-blue-600 text-white px-3 py-2 rounded text-sm">
+                <FileText size={16} className="mr-2" />
+                Export PDF
+              </button>
+            </div>
+          </div>
+
+          {/* Filter options - Stacked on mobile, horizontal on desktop */}
+          <div className="flex flex-col sm:flex-row justify-between gap-4">
             <div className="flex flex-col space-y-2 relative">
               <h3 className="text-sm font-medium text-gray-500">Date Range</h3>
-              <div className="flex items-center">
+              <div className="flex flex-wrap gap-2 items-center">
                 <button
-                  className="flex items-center bg-gray-100 px-4 py-2 rounded text-sm"
-                  onClick={() => setShowDatePicker(!showDatePicker)}
+                  className="flex items-center bg-gray-100 px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDatePicker(!showDatePicker);
+                    setShowReportTypes(false);
+                  }}
                 >
                   <Calendar size={14} className="mr-2" />
                   {dateRange.start}
                   <ChevronDown size={14} className="ml-2" />
                 </button>
-                <span className="mx-2">to</span>
+                <span className="mx-1">to</span>
                 <button
-                  className="flex items-center bg-gray-100 px-4 py-2 rounded text-sm"
-                  onClick={() => setShowDatePicker(!showDatePicker)}
+                  className="flex items-center bg-gray-100 px-3 py-2 rounded text-sm flex-grow sm:flex-grow-0"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowDatePicker(!showDatePicker);
+                    setShowReportTypes(false);
+                  }}
                 >
                   <Calendar size={14} className="mr-2" />
                   {dateRange.end}
@@ -152,8 +187,11 @@ export default function AnalyticsDashboard() {
 
                 {/* Date picker dropdown */}
                 {showDatePicker && (
-                  <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-200 z-10 p-2 w-64">
-                    <div className="grid grid-cols-2 gap-2">
+                  <div
+                    className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-200 z-10 p-2 w-full sm:w-64"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
                         <p className="text-sm font-medium mb-2">Start Date</p>
                         {availableDates.map((date) => (
@@ -195,8 +233,12 @@ export default function AnalyticsDashboard() {
             <div className="flex flex-col space-y-2 relative">
               <h3 className="text-sm font-medium text-gray-500">Report Type</h3>
               <button
-                className="flex items-center bg-gray-100 px-4 py-2 rounded"
-                onClick={() => setShowReportTypes(!showReportTypes)}
+                className="flex items-center bg-gray-100 px-3 py-2 rounded text-sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowReportTypes(!showReportTypes);
+                  setShowDatePicker(false);
+                }}
               >
                 {reportTypes.find((r) => r.name === reportType)?.icon || (
                   <LineChart size={16} />
@@ -207,7 +249,10 @@ export default function AnalyticsDashboard() {
 
               {/* Report type dropdown */}
               {showReportTypes && (
-                <div className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-200 z-10 w-64">
+                <div
+                  className="absolute top-full left-0 mt-1 bg-white shadow-lg rounded-md border border-gray-200 z-10 w-full sm:w-64"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {reportTypes.map((type) => (
                     <button
                       key={type.name}
@@ -226,12 +271,13 @@ export default function AnalyticsDashboard() {
               )}
             </div>
 
-            <div className="flex space-x-3">
-              <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded">
+            {/* Mobile Export Buttons */}
+            <div className="flex sm:hidden space-x-2 w-full mt-2">
+              <button className="flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded text-sm flex-1">
                 <Download size={16} className="mr-2" />
                 Export CSV
               </button>
-              <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded">
+              <button className="flex items-center justify-center bg-blue-600 text-white px-3 py-2 rounded text-sm flex-1">
                 <FileText size={16} className="mr-2" />
                 Export PDF
               </button>
@@ -239,52 +285,57 @@ export default function AnalyticsDashboard() {
           </div>
         </div>
 
-        {/* 4 Stat Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        {/* 4 Stat Cards - Improved for Mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
           {stats.map((stat, index) => (
             <div
               key={index}
               className="bg-white rounded-lg shadow p-4 flex justify-between items-start"
             >
-              <div>
-                <p className="text-sm text-gray-500 mb-2">{stat.title}</p>
-                <p className="text-sm font-semibold mb-1">{stat.value}</p>
+              <div className="flex-1">
+                <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
+                <p className="text-base font-semibold mb-1">{stat.value}</p>
                 <div
-                  className={`flex items-center text-sm ${
+                  className={`flex items-center text-xs ${
                     stat.isNegative ? "text-red-500" : "text-green-500"
                   }`}
                 >
+                  {stat.isNegative ? (
+                    <ArrowDown size={14} className="mr-1" />
+                  ) : (
+                    <ArrowUp size={14} className="mr-1" />
+                  )}
                   <span>{stat.change}% from last month</span>
                 </div>
               </div>
-              <div className={`${stat.color} text-white p-2 rounded-lg`}>
+              <div className={`${stat.color} text-white p-2 rounded-lg flex`}>
                 {stat.icon}
               </div>
             </div>
           ))}
         </div>
 
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        {/* Charts Section - Better Mobile Sizing */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
           {/* Appointments Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-800 mb-4">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4 md:p-6">
+            <h3 className="text-base font-medium text-gray-800 mb-2 sm:mb-4">
               Appointments Over Time
             </h3>
-            <div className="h-64">
+            <div className="h-56 md:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <ReLineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="name" />
-                  <YAxis />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip />
                   <Line
                     type="monotone"
                     dataKey="appointments"
                     stroke="#4a6cf7"
                     strokeWidth={2}
-                    dot={{ r: 4 }}
-                    activeDot={{ r: 6 }}
+                    dot={{ r: 3 }}
+                    activeDot={{ r: 5 }}
                   />
                 </ReLineChart>
               </ResponsiveContainer>
@@ -292,16 +343,16 @@ export default function AnalyticsDashboard() {
           </div>
 
           {/* Revenue Chart */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="text-lg font-medium text-gray-800 mb-4">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4 md:p-6">
+            <h3 className="text-base font-medium text-gray-800 mb-2 sm:mb-4">
               Revenue Trend
             </h3>
-            <div className="h-64">
+            <div className="h-56 md:h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <ReBarChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="name" />
-                  <YAxis />
+                  <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip />
                   <Bar dataKey="revenue" fill="#4caf50" radius={[4, 4, 0, 0]} />
                 </ReBarChart>
@@ -311,20 +362,20 @@ export default function AnalyticsDashboard() {
         </div>
 
         {/* Details Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Doctors Section */}
-          <div className="bg-white rounded-lg shadow p-3">
-            <h3 className="text-xm font-medium text-gray-800 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* Doctors Section - Improved for Mobile */}
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4">
+            <h3 className="text-base font-medium text-gray-800 mb-3">
               Most Active Doctors
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {doctors.map((doctor, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0"
+                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0"
                 >
                   <div className="flex items-center">
-                    <div className="bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center">
+                    <div className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center">
                       <User size={16} className="text-gray-600" />
                     </div>
                     <div className="ml-3">
@@ -341,19 +392,19 @@ export default function AnalyticsDashboard() {
             </div>
           </div>
 
-          {/* Services Section */}
-          <div className="bg-white rounded-lg shadow p-3">
-            <h3 className="text-xm font-medium text-gray-800 mb-4">
+          {/* Services Section - Improved for Mobile */}
+          <div className="bg-white rounded-lg shadow p-3 sm:p-4">
+            <h3 className="text-base font-medium text-gray-800 mb-3">
               Most Active Services
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {services.map((service, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between py-1 border-b border-gray-100 last:border-0"
+                  className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0"
                 >
                   <div className="flex items-center">
-                    <div className={`${service.color} rounded w-7 h-7`}></div>
+                    <div className={`${service.color} rounded w-8 h-8`}></div>
                     <div className="ml-3">
                       <p className="text-sm font-medium">{service.name}</p>
                     </div>

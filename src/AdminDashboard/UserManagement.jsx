@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Users,
   UserPlus,
@@ -18,8 +18,25 @@ export default function UserManagementPage() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const itemsPerPage = 3;
+
+  // Check if it's mobile device
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Check initial size
+    checkIfMobile();
+
+    // Add event listener for resize
+    window.addEventListener("resize", checkIfMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkIfMobile);
+  }, []);
 
   // Sample user data
   const allUsers = [
@@ -183,9 +200,9 @@ export default function UserManagementPage() {
   };
 
   // Update selectAll state when page changes or when selections change
-  useState(() => {
+  useEffect(() => {
     setSelectAll(areAllCurrentUsersSelected());
-  }, [currentPage, selectedUsers]);
+  }, [currentPage, selectedUsers, paginatedUsers]);
 
   // Helper function to render status badge
   const renderStatusBadge = (status) => {
@@ -211,7 +228,7 @@ export default function UserManagementPage() {
   // Generate pagination buttons
   const renderPaginationButtons = () => {
     const buttons = [];
-    const maxVisibleButtons = 5;
+    const maxVisibleButtons = isMobile ? 3 : 5;
     let startPage = Math.max(
       1,
       currentPage - Math.floor(maxVisibleButtons / 2)
@@ -254,16 +271,18 @@ export default function UserManagementPage() {
   );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-2 sm:p-4 md:p-6 bg-gray-50 min-h-screen">
       {/* First Section: Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
         {/* Card 1: Total Users */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
           <div className="flex justify-between items-start">
             <div>
               <h3 className="text-sm font-medium text-gray-500">Total Users</h3>
-              <p className="text-2sm font-bold mt-1">{allUsers.length}</p>
-              <p className="text-sm mt-2 text-green-500">
+              <p className="text-xl sm:text-2xl font-bold mt-1">
+                {allUsers.length}
+              </p>
+              <p className="text-xs sm:text-sm mt-2 text-green-500">
                 +12.5% from last month
               </p>
             </div>
@@ -274,16 +293,16 @@ export default function UserManagementPage() {
         </div>
 
         {/* Card 2: Active Users */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
           <div className="flex justify-between items-start">
             <div>
               <h3 className="text-sm font-medium text-gray-500">
                 Active Users
               </h3>
-              <p className="text-2sm font-bold mt-1">
+              <p className="text-xl sm:text-2xl font-bold mt-1">
                 {allUsers.filter((u) => u.status === "Active").length}
               </p>
-              <p className="text-sm mt-2 text-green-500">
+              <p className="text-xs sm:text-sm mt-2 text-green-500">
                 +8.2% from last month
               </p>
             </div>
@@ -294,16 +313,18 @@ export default function UserManagementPage() {
         </div>
 
         {/* Card 3: Inactive Users */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
           <div className="flex justify-between items-start">
             <div>
               <h3 className="text-sm font-medium text-gray-500">
                 Inactive Users
               </h3>
-              <p className="text-2sm font-bold mt-1">
+              <p className="text-xl sm:text-2xl font-bold mt-1">
                 {allUsers.filter((u) => u.status === "Inactive").length}
               </p>
-              <p className="text-sm mt-2 text-green-500">-3.1% from last month</p>
+              <p className="text-xs sm:text-sm mt-2 text-green-500">
+                -3.1% from last month
+              </p>
             </div>
             <div className="p-2 bg-gray-100 rounded-lg">
               <Users className="text-yellow-500" size={24} />
@@ -312,16 +333,16 @@ export default function UserManagementPage() {
         </div>
 
         {/* Card 4: Pending Users */}
-        <div className="bg-white p-4 rounded-lg shadow">
+        <div className="bg-white p-3 sm:p-4 rounded-lg shadow">
           <div className="flex justify-between items-start">
             <div>
               <h3 className="text-sm font-medium text-gray-500">
                 Pending Users
               </h3>
-              <p className="text-2sm font-bold mt-1">
+              <p className="text-xl sm:text-2xl font-bold mt-1">
                 {allUsers.filter((u) => u.status === "Pending").length}
               </p>
-              <p className="text-sm mt-2 text-green-500">
+              <p className="text-xs sm:text-sm mt-2 text-green-500">
                 +5.8% from last month
               </p>
             </div>
@@ -333,12 +354,12 @@ export default function UserManagementPage() {
       </div>
 
       {/* Second Section: Controls */}
-      <div className="bg-white p-4 rounded-lg shadow mb-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap gap-3">
+      <div className="bg-white p-3 sm:p-4 rounded-lg shadow mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
             {/* Role dropdown - without icon */}
             <select
-              className="px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200"
+              className="px-2 sm:px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200 w-full sm:w-auto"
               value={selectedRole}
               onChange={(e) => {
                 setSelectedRole(e.target.value);
@@ -354,7 +375,7 @@ export default function UserManagementPage() {
 
             {/* Status dropdown - without icon */}
             <select
-              className="px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200"
+              className="px-2 sm:px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200 w-full sm:w-auto"
               value={selectedStatus}
               onChange={(e) => {
                 setSelectedStatus(e.target.value);
@@ -371,18 +392,18 @@ export default function UserManagementPage() {
             {/* Date picker - without icon */}
             <input
               type="date"
-              className="px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200"
+              className="px-2 sm:px-3 py-2 text-sm bg-gray-100 rounded-md border border-gray-200 w-full sm:w-auto"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
             />
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md transition-colors">
+          <div className="flex flex-wrap gap-2 sm:gap-3 w-full sm:w-auto">
+            <button className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-500 text-white hover:bg-blue-600 rounded-md transition-colors w-full sm:w-auto justify-center sm:justify-start">
               <UserPlus size={16} />
               <span>Add User</span>
             </button>
-            <button className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors">
+            <button className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors w-full sm:w-auto justify-center sm:justify-start">
               <Download size={16} />
               <span>Export</span>
             </button>
@@ -392,101 +413,105 @@ export default function UserManagementPage() {
 
       {/* Third Section: Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-4 py-3 text-left">
-                <div className="flex items-center">
-                  <Checkbox checked={selectAll} onChange={toggleSelectAll} />
-                </div>
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Role
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Date
-              </th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedUsers.map((user) => (
-              <tr key={user.id} className="hover:bg-gray-50">
-                <td className="px-4 py-4 whitespace-nowrap">
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-2 sm:px-4 py-3 text-left">
                   <div className="flex items-center">
-                    <Checkbox
-                      checked={selectedUsers.includes(user.id)}
-                      onChange={() => toggleUserSelection(user.id)}
-                    />
+                    <Checkbox checked={selectAll} onChange={toggleSelectAll} />
                   </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 h-8 w-8">
-                      <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
-                        {user.name.charAt(0)}
-                      </div>
-                    </div>
-                    <div className="ml-3">
-                      <div className="text-sm font-medium text-gray-900">
-                        {user.name}
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{user.role}</div>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {renderStatusBadge(user.status)}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {user.registered}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex justify-end gap-2">
-                    <button className="p-1 text-blue-600 hover:text-blue-900">
-                      <Eye size={16} />
-                    </button>
-                    <button className="p-1 text-green-600 hover:text-green-900">
-                      <Edit size={16} />
-                    </button>
-                    <button className="p-1 text-red-600 hover:text-red-900">
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                </td>
+                </th>
+                <th
+                  scope="col"
+                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell"
+                >
+                  Role
+                </th>
+                <th
+                  scope="col"
+                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  scope="col"
+                  className="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell"
+                >
+                  Date
+                </th>
+                <th
+                  scope="col"
+                  className="px-2 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {paginatedUsers.map((user) => (
+                <tr key={user.id} className="hover:bg-gray-50">
+                  <td className="px-2 sm:px-4 py-2 sm:py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <Checkbox
+                        checked={selectedUsers.includes(user.id)}
+                        onChange={() => toggleUserSelection(user.id)}
+                      />
+                    </div>
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-6 w-6 sm:h-8 sm:w-8">
+                        <div className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xs sm:text-sm">
+                          {user.name.charAt(0)}
+                        </div>
+                      </div>
+                      <div className="ml-2 sm:ml-3">
+                        <div className="text-xs sm:text-sm font-medium text-gray-900">
+                          {user.name}
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 whitespace-nowrap hidden sm:table-cell">
+                    <div className="text-xs sm:text-sm text-gray-900">
+                      {user.role}
+                    </div>
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 whitespace-nowrap">
+                    {renderStatusBadge(user.status)}
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-xs sm:text-sm text-gray-500 hidden md:table-cell">
+                    {user.registered}
+                  </td>
+                  <td className="px-2 sm:px-6 py-2 sm:py-4 whitespace-nowrap text-right text-xs sm:text-sm font-medium">
+                    <div className="flex justify-end gap-1 sm:gap-2">
+                      <button className="p-1 text-blue-600 hover:text-blue-900">
+                        <Eye size={16} />
+                      </button>
+                      <button className="p-1 text-green-600 hover:text-green-900">
+                        <Edit size={16} />
+                      </button>
+                      <button className="p-1 text-red-600 hover:text-red-900">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
         {/* Pagination */}
-        <div className="px-6 py-3 flex items-center justify-between border-t border-gray-200">
-          <div className="text-sm text-gray-700">
+        <div className="px-2 sm:px-6 py-2 sm:py-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-gray-200">
+          <div className="text-xs sm:text-sm text-gray-700 order-2 sm:order-1">
             Showing <span className="font-medium">{startIndex + 1}</span> to{" "}
             <span className="font-medium">
               {Math.min(startIndex + itemsPerPage, filteredUsers.length)}
@@ -494,9 +519,9 @@ export default function UserManagementPage() {
             of <span className="font-medium">{filteredUsers.length}</span>{" "}
             results
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-1 sm:gap-2 order-1 sm:order-2">
             <button
-              className="px-3 py-1 border rounded-md hover:bg-gray-50 text-gray-600 disabled:opacity-50"
+              className="px-2 sm:px-3 py-1 border rounded-md hover:bg-gray-50 text-gray-600 disabled:opacity-50"
               onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
               disabled={currentPage === 1}
             >
@@ -506,7 +531,7 @@ export default function UserManagementPage() {
             {renderPaginationButtons()}
 
             <button
-              className="px-3 py-1 border rounded-md hover:bg-gray-50 text-gray-600 disabled:opacity-50"
+              className="px-2 sm:px-3 py-1 border rounded-md hover:bg-gray-50 text-gray-600 disabled:opacity-50"
               onClick={() =>
                 setCurrentPage((prev) => Math.min(totalPages, prev + 1))
               }

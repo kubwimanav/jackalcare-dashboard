@@ -1,80 +1,179 @@
-import React, { useState } from 'react';
-import { Calendar, ChevronDown, Download, CreditCard, Eye, MoreVertical, ArrowUp, ArrowDown, DollarSign, UserPlus, Clipboard, Activity } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { FaChartLine } from 'react-icons/fa6';
-import { GoClockFill } from 'react-icons/go';
-import { FaExclamationTriangle } from 'react-icons/fa';
-import doctor1 from '../assets/doctor1.jpg';
-import doctor2 from '../assets/doctor2.jpg'; 
+import React, { useState } from "react";
+import {
+  Calendar,
+  ChevronDown,
+  Download,
+  CreditCard,
+  Eye,
+  MoreVertical,
+  ArrowUp,
+  ArrowDown,
+  DollarSign,
+  UserPlus,
+  Clipboard,
+  Activity,
+} from "lucide-react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { FaChartLine } from "react-icons/fa6";
+import { GoClockFill } from "react-icons/go";
+import { FaExclamationTriangle } from "react-icons/fa";
+import doctor1 from "../assets/doctor1.jpg";
+import doctor2 from "../assets/doctor2.jpg";
 
 export default function PaymentDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All Status');
-  const [methodFilter, setMethodFilter] = useState('All Methods');
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All Status");
+  const [methodFilter, setMethodFilter] = useState("All Methods");
   const pageSize = 3;
 
   // Sample data for revenue cards
- const revenueCards = [
-   {
-     title: "Total Revenue",
-     value: "$84,686",
-     percentage: "+12.5% from last month",
-     percentageColor: "text-green-500", // Green for positive
-     icon: <DollarSign size={20} className="text-[#059669] " />,
-   },
-   {
-     title: "Total Appointments",
-     value: "145",
-     percentage: "+3.2% from yesterday",
-     percentageColor: "text-[#2563EB]", // Green for positive
-     icon: <FaChartLine size={20} className="text-[#2563EB] " />,
-   },
-   {
-     title: "Total Claims",
-     value: "86",
-     percentage: "5 new today",
-     percentageColor: "text-[#D97706]", // Blue for neutral/informational
-     icon: <GoClockFill size={20} className="text-[#D97706] " />,
-   },
-   {
-     title: "Average Revenue",
-     value: "$556",
-     percentage: "-2 from yesterday",
-     percentageColor: "text-red-500", // Red for negative
-     icon: <FaExclamationTriangle size={20} className="text-[#DC2626]" />,
-   },
- ];
+  const revenueCards = [
+    {
+      title: "Total Revenue",
+      value: "$84,686",
+      percentage: "+12.5% from last month",
+      percentageColor: "text-green-500", // Green for positive
+      icon: <DollarSign size={20} className="text-[#059669] " />,
+    },
+    {
+      title: "Total Appointments",
+      value: "145",
+      percentage: "+3.2% from yesterday",
+      percentageColor: "text-[#2563EB]", // Green for positive
+      icon: <FaChartLine size={20} className="text-[#2563EB] " />,
+    },
+    {
+      title: "Total Claims",
+      value: "86",
+      percentage: "5 new today",
+      percentageColor: "text-[#D97706]", // Blue for neutral/informational
+      icon: <GoClockFill size={20} className="text-[#D97706] " />,
+    },
+    {
+      title: "Average Revenue",
+      value: "$556",
+      percentage: "-2 from yesterday",
+      percentageColor: "text-red-500", // Red for negative
+      icon: <FaExclamationTriangle size={20} className="text-[#DC2626]" />,
+    },
+  ];
 
   // Sample data for chart
   const chartData = [
-    { name: 'Mon', revenue: 2400 },
-    { name: 'Tue', revenue: 4200 },
-    { name: 'Wed', revenue: 5800 },
-    { name: 'Thu', revenue: 4800 },
-    { name: 'Fri', revenue: 7200 },
-    { name: 'Sat', revenue: 5600 },
-    { name: 'Sun', revenue: 6800 }
+    { name: "Mon", revenue: 2400 },
+    { name: "Tue", revenue: 4200 },
+    { name: "Wed", revenue: 5800 },
+    { name: "Thu", revenue: 4800 },
+    { name: "Fri", revenue: 7200 },
+    { name: "Sat", revenue: 5600 },
+    { name: "Sun", revenue: 6800 },
   ];
 
   // Sample data for transactions
   const allTransactions = [
-    { id: '#TRX123456', patient: 'Sarah Johnson', patientImg: doctor1, amount: '$145.00', date: '23 Apr 2025', status: 'Paid', method: 'Visa', methodIcon: <CreditCard size={16} className="text-blue-600" /> },
-    { id: '#TRX123457', patient: 'Michael Brown', patientImg: doctor2, amount: '$320.50', date: '22 Apr 2025', status: 'Pending', method: 'MasterCard', methodIcon: <CreditCard size={16} className="text-red-600" /> },
-    { id: '#TRX123458', patient: 'Emily Wilson', patientImg: doctor1, amount: '$95.00', date: '21 Apr 2025', status: 'Paid', method: 'PayPal', methodIcon: <CreditCard size={16} className="text-blue-400" /> },
-    { id: '#TRX123459', patient: 'David Miller', patientImg: doctor1, amount: '$210.75', date: '20 Apr 2025', status: 'Failed', method: 'Visa', methodIcon: <CreditCard size={16} className="text-blue-600" /> },
-    { id: '#TRX123460', patient: 'Jennifer Lee', patientImg: doctor2, amount: '$180.25', date: '19 Apr 2025', status: 'Paid', method: 'ApplePay', methodIcon: <CreditCard size={16} className="text-gray-700" /> },
-    { id: '#TRX123461', patient: 'Robert Garcia', patientImg: doctor2, amount: '$75.50', date: '18 Apr 2025', status: 'Pending', method: 'MasterCard', methodIcon: <CreditCard size={16} className="text-red-600" /> },
-    { id: '#TRX123462', patient: 'Lisa Anderson', patientImg: doctor2, amount: '$250.00', date: '17 Apr 2025', status: 'Paid', method: 'Visa', methodIcon: <CreditCard size={16} className="text-blue-600" /> },
-    { id: '#TRX123463', patient: 'James Wilson', patientImg: doctor1, amount: '$120.00', date: '16 Apr 2025', status: 'Paid', method: 'PayPal', methodIcon: <CreditCard size={16} className="text-blue-400" /> },
+    {
+      id: "#TRX123456",
+      patient: "Sarah Johnson",
+      patientImg: doctor1,
+      amount: "$145.00",
+      date: "23 Apr 2025",
+      status: "Paid",
+      method: "Visa",
+      methodIcon: <CreditCard size={16} className="text-blue-600" />,
+    },
+    {
+      id: "#TRX123457",
+      patient: "Michael Brown",
+      patientImg: doctor2,
+      amount: "$320.50",
+      date: "22 Apr 2025",
+      status: "Pending",
+      method: "MasterCard",
+      methodIcon: <CreditCard size={16} className="text-red-600" />,
+    },
+    {
+      id: "#TRX123458",
+      patient: "Emily Wilson",
+      patientImg: doctor1,
+      amount: "$95.00",
+      date: "21 Apr 2025",
+      status: "Paid",
+      method: "PayPal",
+      methodIcon: <CreditCard size={16} className="text-blue-400" />,
+    },
+    {
+      id: "#TRX123459",
+      patient: "David Miller",
+      patientImg: doctor1,
+      amount: "$210.75",
+      date: "20 Apr 2025",
+      status: "Failed",
+      method: "Visa",
+      methodIcon: <CreditCard size={16} className="text-blue-600" />,
+    },
+    {
+      id: "#TRX123460",
+      patient: "Jennifer Lee",
+      patientImg: doctor2,
+      amount: "$180.25",
+      date: "19 Apr 2025",
+      status: "Paid",
+      method: "ApplePay",
+      methodIcon: <CreditCard size={16} className="text-gray-700" />,
+    },
+    {
+      id: "#TRX123461",
+      patient: "Robert Garcia",
+      patientImg: doctor2,
+      amount: "$75.50",
+      date: "18 Apr 2025",
+      status: "Pending",
+      method: "MasterCard",
+      methodIcon: <CreditCard size={16} className="text-red-600" />,
+    },
+    {
+      id: "#TRX123462",
+      patient: "Lisa Anderson",
+      patientImg: doctor2,
+      amount: "$250.00",
+      date: "17 Apr 2025",
+      status: "Paid",
+      method: "Visa",
+      methodIcon: <CreditCard size={16} className="text-blue-600" />,
+    },
+    {
+      id: "#TRX123463",
+      patient: "James Wilson",
+      patientImg: doctor1,
+      amount: "$120.00",
+      date: "16 Apr 2025",
+      status: "Paid",
+      method: "PayPal",
+      methodIcon: <CreditCard size={16} className="text-blue-400" />,
+    },
   ];
 
   // Status options
-  const statusOptions = ['All Status', 'Paid', 'Pending', 'Failed'];
-  
+  const statusOptions = ["All Status", "Paid", "Pending", "Failed"];
+
   // Method options
-  const methodOptions = ['All Methods', 'Visa', 'MasterCard', 'PayPal', 'ApplePay'];
+  const methodOptions = [
+    "All Methods",
+    "Visa",
+    "MasterCard",
+    "PayPal",
+    "ApplePay",
+  ];
 
   // Pagination logic
   const totalPages = Math.ceil(allTransactions.length / pageSize);
@@ -151,66 +250,85 @@ export default function PaymentDashboard() {
       </div>
 
       {/* Third Section: Recent Transactions */}
-      <div className="bg-white p-5 rounded-lg shadow-sm border border-gray-100">
-        <div className="flex flex-wrap justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold">Recent Transactions</h2>
-          <div className="flex items-center gap-2">
-            <div className="flex flex-wrap gap-2 mt-3 sm:mt-0">
-              <input
-                type="date"
-                className="w-32 pl-3 pr-3 py-1.5 text-sm border rounded-lg bg-white appearance-none"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-              />
-              <span className="text-gray-500">to</span>
-              <input
-                type="date"
-                className="w-32 pl-3 pr-3 py-1.5 text-sm border rounded-lg bg-white appearance-none"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-              />
+      <div className="bg-white p-4 sm:p-5 rounded-lg shadow-sm border border-gray-100">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6">
+          <h2 className="text-lg font-semibold mb-4 sm:mb-0">
+            Recent Transactions
+          </h2>
+
+          <div className="w-full sm:w-auto">
+            {/* Date Range Inputs - Column on mobile, Row on larger screens */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-2 mb-3">
+              <div className="w-full sm:w-auto">
+                <label className="block text-gray-500 text-xs mb-1 sm:hidden">
+                  From:
+                </label>
+                <input
+                  type="date"
+                  className="w-full sm:w-32 pl-3 pr-3 py-1.5 text-sm border rounded-lg bg-white appearance-none"
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                />
+              </div>
+
+              <span className="text-gray-500 hidden sm:block px-1">to</span>
+
+              <div className="w-full sm:w-auto">
+                <label className="block text-gray-500 text-xs mb-1 sm:hidden">
+                  To:
+                </label>
+                <input
+                  type="date"
+                  className="w-full sm:w-32 pl-3 pr-3 py-1.5 text-sm border rounded-lg bg-white appearance-none"
+                  value={toDate}
+                  onChange={(e) => setToDate(e.target.value)}
+                />
+              </div>
             </div>
 
-            <select
-              className="border rounded-lg px-3 py-1.5 text-sm bg-white appearance-none pr-8 relative"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 0.5rem center",
-              }}
-            >
-              {statusOptions.map((status, index) => (
-                <option key={index} value={status}>
-                  {status}
-                </option>
-              ))}
-            </select>
+            {/* Filters and Button - Always Row */}
+            <div className="flex flex-wrap gap-2 w-full">
+              <select
+                className="flex-grow min-w-0 sm:flex-grow-0 border rounded-lg px-3 py-1.5 text-sm bg-white appearance-none pr-8 relative"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 0.5rem center",
+                }}
+              >
+                {statusOptions.map((status, index) => (
+                  <option key={index} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
 
-            <select
-              className="border rounded-lg px-3 py-1.5 text-sm bg-white appearance-none pr-8 relative"
-              value={methodFilter}
-              onChange={(e) => setMethodFilter(e.target.value)}
-              style={{
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "right 0.5rem center",
-              }}
-            >
-              {methodOptions.map((method, index) => (
-                <option key={index} value={method}>
-                  {method}
-                </option>
-              ))}
-            </select>
+              <select
+                className="flex-grow min-w-0 sm:flex-grow-0 border rounded-lg px-3 py-1.5 text-sm bg-white appearance-none pr-8 relative"
+                value={methodFilter}
+                onChange={(e) => setMethodFilter(e.target.value)}
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 0.5rem center",
+                }}
+              >
+                {methodOptions.map((method, index) => (
+                  <option key={index} value={method}>
+                    {method}
+                  </option>
+                ))}
+              </select>
 
-            <button className="flex items-center gap-1 border rounded-lg px-3 py-1.5 text-sm bg-white text-blue-600">
-              <Download size={16} />
-              <span>Export</span>
-            </button>
+              <button className="flex-grow sm:flex-grow-0 flex items-center justify-center gap-1 border rounded-lg px-3 py-1.5 text-sm bg-white text-blue-600 hover:bg-blue-50">
+                <Download size={16} />
+                <span>Export</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

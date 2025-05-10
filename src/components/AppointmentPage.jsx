@@ -93,26 +93,23 @@ const AppointmentPage = () => {
 
   const daysOfWeek = getDaysOfWeek();
 
-  // Handle booking confirmation
-
-
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
+    <div className="bg-gray-100 min-h-screen p-4 sm:p-6">
       <div className="max-w-6xl mx-auto">
-        {/* First Section: Service Types - Updated with smaller cards and no background icon */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        {/* First Section: Service Types */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6 sm:mb-8">
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer 
-                $
+              className={`bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow cursor-pointer ${
+                selectedService === index ? "ring-2 ring-blue-500" : ""
               }`}
-              // onClick={() => setSelectedService(index)}
+              onClick={() => setSelectedService(index)}
             >
               <div className="flex flex-col items-start mb-2">
                 <div className="text-blue-500 mb-1">{service.icon}</div>
                 <h3 className="text-sm font-semibold">{service.title}</h3>
-                <p className="text-gray-600 text-sm mt-1">
+                <p className="text-gray-600 text-xs sm:text-sm mt-1">
                   {service.description}
                 </p>
               </div>
@@ -120,29 +117,31 @@ const AppointmentPage = () => {
                 <span className="text-blue-600 font-bold">
                   ${service.price}
                 </span>
-                {/* {selectedService === index && (
+                {selectedService === index && (
                   <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                     Selected
                   </span>
-                )} */}
+                )}
               </div>
             </div>
           ))}
         </div>
 
         {/* Second Section: Doctor Selection */}
-        <h2 className="text-2xs font-semibold my-5 text-gray-800">
+        <h2 className="text-xs sm:text-sm font-semibold my-4 sm:my-5 text-gray-800">
           Select Doctor
         </h2>
-        <div className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="mb-6 sm:mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
             {doctors.map((doctor, index) => (
               <div
                 key={doctor.id}
-                className="flex bg-white rounded-lg p-4 shadow"
+                className={`flex bg-white rounded-lg p-3 sm:p-4 shadow cursor-pointer ${
+                  selectedDoctor === index ? "ring-2 ring-blue-500" : ""
+                }`}
                 onClick={() => setSelectedDoctor(index)}
               >
-                <div className="w-9 h-9 bg-blue-100 rounded-full mr-4 overflow-hidden">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 bg-blue-100 rounded-full mr-3 sm:mr-4 overflow-hidden flex-shrink-0">
                   <img
                     src={profile}
                     alt={doctor.name}
@@ -150,8 +149,10 @@ const AppointmentPage = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold mb-1">{doctor.name}</h3>
-                  <p className="text-gray-600 text-sm mb-1">
+                  <h3 className="text-xs sm:text-sm font-semibold mb-0.5 sm:mb-1">
+                    {doctor.name}
+                  </h3>
+                  <p className="text-gray-600 text-xs mb-0.5 sm:mb-1">
                     {doctor.specialty}
                   </p>
                   <div className="flex items-center gap-1">
@@ -159,7 +160,7 @@ const AppointmentPage = () => {
                       size={14}
                       className="text-yellow-400 fill-yellow-400"
                     />
-                    <span className="font-medium">{doctor.rating}</span>
+                    <span className="text-xs font-medium">{doctor.rating}</span>
                     <span className="text-gray-500 text-xs">
                       ({doctor.reviews} reviews)
                     </span>
@@ -171,9 +172,9 @@ const AppointmentPage = () => {
         </div>
 
         {/* Third Section: Date and Time Selection - Minimized Calendar */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
           <div className="bg-white rounded-lg p-4 shadow">
-            <h3 className="text-2xs font-semibold mb-3 text-gray-800 flex items-center">
+            <h3 className="text-xs sm:text-sm font-semibold mb-3 text-gray-800 flex items-center">
               Select Date
             </h3>
 
@@ -183,17 +184,17 @@ const AppointmentPage = () => {
                 <button className="p-1 rounded">
                   <ChevronLeft size={16} />
                 </button>
-                <div className="text-sm font-medium">This Week</div>
+                <div className="text-xs sm:text-sm font-medium">This Week</div>
                 <button className="p-1 rounded">
                   <ChevronRight size={16} />
                 </button>
               </div>
 
-              <div className="flex justify-between">
+              <div className="flex justify-between overflow-x-auto pb-1">
                 {daysOfWeek.map((day, index) => (
                   <div
                     key={index}
-                    className={`flex flex-col items-center cursor-pointer p-2 rounded-lg ${
+                    className={`flex flex-col items-center cursor-pointer p-1 sm:p-2 rounded-lg min-w-10 ${
                       selectedDate.getDate() === day.date.getDate()
                         ? "bg-blue-500 text-white"
                         : ""
@@ -209,14 +210,14 @@ const AppointmentPage = () => {
           </div>
 
           <div className="bg-white rounded-lg p-4 shadow">
-            <h3 className="text-2xs font-semibold mb-3 text-gray-800 flex items-center">
+            <h3 className="text-xs sm:text-sm font-semibold mb-3 text-gray-800 flex items-center">
               Select Time
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-2">
               {timeSlots.map((time, index) => (
                 <div
                   key={index}
-                  className={`py-1 px-2 text-center cursor-pointer text-sm rounded
+                  className={`py-1 px-2 text-center cursor-pointer text-xs sm:text-sm rounded
                     ${
                       selectedTime === index
                         ? "border-2 border-blue-500 font-medium"
@@ -232,25 +233,31 @@ const AppointmentPage = () => {
         </div>
 
         {/* Fourth Section: Appointment Summary */}
-        <h2 className="text-2xs font-semibold my-5 text-gray-800">
+        <h2 className="text-xs sm:text-sm font-semibold my-4 sm:my-5 text-gray-800">
           Appointment Summary
         </h2>
-        <div className="bg-white rounded-lg p-5 shadow mb-8">
-          <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-normal text-gray-600">Service</span>
-            <span className="text-black text-sm font-medium">
+        <div className="bg-white rounded-lg p-4 sm:p-5 shadow mb-6 sm:mb-8">
+          <div className="py-2 sm:py-3 flex justify-between border-b border-gray-200">
+            <span className="font-normal text-gray-600 text-xs sm:text-sm">
+              Service
+            </span>
+            <span className="text-black text-xs sm:text-sm font-medium">
               {services[selectedService].title}
             </span>
           </div>
-          <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-normal text-gray-600">Doctor</span>
-            <span className="text-black text-sm font-medium">
+          <div className="py-2 sm:py-3 flex justify-between border-b border-gray-200">
+            <span className="font-normal text-gray-600 text-xs sm:text-sm">
+              Doctor
+            </span>
+            <span className="text-black text-xs sm:text-sm font-medium">
               {doctors[selectedDoctor].name}
             </span>
           </div>
-          <div className="py-3 flex justify-between border-b border-gray-200">
-            <span className="font-normal text-gray-600">Date & Time</span>
-            <span className="text-black text-sm font-medium ">
+          <div className="py-2 sm:py-3 flex justify-between border-b border-gray-200">
+            <span className="font-normal text-gray-600 text-xs sm:text-sm">
+              Date & Time
+            </span>
+            <span className="text-black text-xs sm:text-sm font-medium">
               {selectedDate.toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
@@ -260,26 +267,26 @@ const AppointmentPage = () => {
             </span>
           </div>
 
-          <div className="py-3 flex justify-between">
-            <span className="font-normal text-gray-600">Price</span>
-            <span className="text-lg font-semibold text-blue-600">
+          <div className="py-2 sm:py-3 flex justify-between">
+            <span className="font-normal text-gray-600 text-xs sm:text-sm">
+              Price
+            </span>
+            <span className="text-base sm:text-lg font-semibold text-blue-600">
               ${services[selectedService].price}
             </span>
           </div>
         </div>
 
         {/* Button Container */}
-        <div className="flex justify-end gap-4 mt-6">
-          <button className="px-5 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors">
+        <div className="flex justify-end gap-3 sm:gap-4 mt-4 sm:mt-6">
+          <button className="px-3 sm:px-5 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-300 transition-colors">
             Back
           </button>
-          <button className="px-5 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <button className="px-3 sm:px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
             <Link to={"/portal"}>Confirm Booking</Link>
           </button>
         </div>
       </div>
-
-      {/* Confirmation Popup */}
     </div>
   );
 };
