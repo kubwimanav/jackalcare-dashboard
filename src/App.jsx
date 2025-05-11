@@ -17,6 +17,7 @@ import SettingAdmin from './AdminDashboard/SettingAdmin'
 import ReportAnaltics from './AdminDashboard/ReportAnaltics'
 import SupportFeedback from './AdminDashboard/SupportFeedback'
 import PaymentPortal from './components/PaymentPortal'
+import LandingpageLayout from './landingpage/LandingpageLayout'
 
 function App() {
 
@@ -24,7 +25,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<DashboardLayout />}>
+          <Route path='/' element={<LandingpageLayout />}>
+          </Route>
+
+          <Route path="/patient" element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
             <Route path="dashboard" element={<DashboardHome />} />
             <Route path="medicalhistory" element={<MedicalHistoryPage />} />
