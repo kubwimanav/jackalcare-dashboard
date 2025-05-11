@@ -283,7 +283,7 @@ const AppointmentPage = () => {
             Back
           </button>
           <button className="px-3 sm:px-5 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
-            <Link to={"/portal"}>Confirm Booking</Link>
+            <Link to={"/patient/portal"}>Confirm Booking</Link>
           </button>
         </div>
       </div>

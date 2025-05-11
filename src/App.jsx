@@ -25,17 +25,17 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<LandingpageLayout />}>
-          </Route>
+          <Route path="/" element={<LandingpageLayout />}></Route>
 
           <Route path="/patient" element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
             <Route path="dashboard" element={<DashboardHome />} />
             <Route path="medicalhistory" element={<MedicalHistoryPage />} />
-            <Route path="appointment" element={<AppointmentPage />} />
+            <Route path="appointment" element={<AppointmentPage />}></Route>
+            <Route path="portal" element={<PaymentPortal />} />
+
             <Route path="profile" element={<ProfilePage />} />
             <Route path="setting" element={<SettingPage />} />
-            <Route path="portal" element={<PaymentPortal />} />
           </Route>
 
           <Route path="/admin" element={<AdminDashboardLayout />}>
