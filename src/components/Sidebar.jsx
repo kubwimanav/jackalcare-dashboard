@@ -10,27 +10,27 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const menuItems = [
     {
       name: "Dashboard",
-      path: "/",
+      path: "/patient",
       icon: <Home className="h-5 w-5 mr-3" />,
     },
     {
       name: "Profile",
-      path: "/Profile",
+      path: "Profile",
       icon: <BarChart2 className="h-5 w-5 mr-3" />,
     },
     {
       name: "Appointment",
-      path: "/appointment",
+      path: "appointment",
       icon: <FileText className="h-5 w-5 mr-3" />,
     },
     {
       name: "Medical History",
-      path: "/medicalhistory",
+      path: "medicalhistory",
       icon: <Users className="h-5 w-5 mr-3" />,
     },
     {
       name: "Settings",
-      path: "/setting",
+      path: "setting",
       icon: <Settings className="h-5 w-5 mr-3" />,
     },
   ];
